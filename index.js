@@ -1,6 +1,6 @@
 class PageDAORegistry {
   constructor(options = {}) {
-    this.baseUrl = options.baseUrl || 'https://registry.pagedao.org/.netlify/functions/registry';
+    this.baseUrl = options.baseUrl || 'https://reggie-db.netlify.app/.netlify/functions/registry';
     this.apiKey = options.apiKey;
     this.registry = null;
     this.lastFetchTime = null;
