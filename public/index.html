@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PageDAO Registry Service</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    h1 {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 15px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .endpoint {
+      font-family: monospace;
+      background-color: #f0f0f0;
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+  <h1>PageDAO Registry Service</h1>
+  
+  <p>This is the API service for the PageDAO Registry. The registry stores information about contracts across multiple blockchains.</p>
+  
+  <h2>API Endpoints</h2>
+  
+  <h3>GET Registry Data</h3>
+  <p>Retrieve the current registry data:</p>
+  <p><span class="endpoint">GET /.netlify/functions/registry</span></p>
+  
+  <h3>Example Response</h3>
+  <pre id="example-response">Loading...</pre>
+  
+  <script>
+    // Fetch and display the registry data as an example
+    fetch('/.netlify/functions/registry')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('example-response').textContent = JSON.stringify(data, null, 2);
+      })
+      .catch(error => {
+        document.getElementById('example-response').textContent = 'Error fetching registry data: ' + error.message;
+      });
+  </script>
+</body>
+</html>

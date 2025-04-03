@@ -4,3 +4,8 @@
 [dev]
   functions = "functions"
   publish = "public"
+
+[[redirects]]
+  from = "/"
+  to = "/.netlify/functions/registry"
+  status = 200
