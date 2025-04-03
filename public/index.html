@@ -28,6 +28,79 @@
       padding: 2px 5px;
       border-radius: 3px;
     }
+    .admin-section {
+      margin-top: 40px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .message {
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 4px;
+    }
+    .success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    .error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+    .hidden {
+      display: none;
+    }
+    .tabs {
+      display: flex;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .tab {
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    .tab.active {
+      border: 1px solid #ddd;
+      border-bottom: none;
+      border-radius: 5px 5px 0 0;
+      background-color: #fff;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -35,25 +108,224 @@
   
   <p>This is the API service for the PageDAO Registry. The registry stores information about contracts across multiple blockchains.</p>
   
-  <h2>API Endpoints</h2>
+  <div class="tabs">
+    <div class="tab active" data-tab="api-docs">API Documentation</div>
+    <div class="tab" data-tab="registry-data">Registry Data</div>
+    <div class="tab" data-tab="admin-panel">Admin Panel</div>
+  </div>
   
-  <h3>GET Registry Data</h3>
-  <p>Retrieve the current registry data:</p>
-  <p><span class="endpoint">GET /.netlify/functions/registry</span></p>
+  <div id="api-docs" class="tab-content active">
+    <h2>API Endpoints</h2>
+    
+    <h3>GET Registry Data</h3>
+    <p>Retrieve the current registry data:</p>
+    <p><span class="endpoint">GET /.netlify/functions/registry</span></p>
+    
+    <h3>PUT Update Registry</h3>
+    <p>Update the registry data (requires authentication):</p>
+    <p><span class="endpoint">PUT /.netlify/functions/registry</span></p>
+    <p>Headers:</p>
+    <pre>
+Content-Type: application/json
+Authorization: Bearer YOUR_API_TOKEN</pre>
+  </div>
   
-  <h3>Example Response</h3>
-  <pre id="example-response">Loading...</pre>
+  <div id="registry-data" class="tab-content">
+    <h2>Current Registry Data</h2>
+    <pre id="example-response">Loading...</pre>
+  </div>
+  
+  <div id="admin-panel" class="tab-content">
+    <div class="admin-section">
+      <h2>Admin: Add Item to Registry</h2>
+      
+      <div id="auth-form">
+        <div class="form-group">
+          <label for="api-token">API Token:</label>
+          <input type="password" id="api-token" placeholder="Enter your API token">
+        </div>
+        <button id="auth-button">Authenticate</button>
+        <div id="auth-message" class="message hidden"></div>
+      </div>
+      
+      <div id="add-item-form" class="hidden">
+        <div class="form-group">
+          <label for="chain">Blockchain:</label>
+          <select id="chain">
+            <option value="base">Base</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="polygon">Polygon</option>
+            <option value="zora">Zora</option>
+            <option value="optimism">Optimism</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" placeholder="Contract name">
+        </div>
+        
+        <div class="form-group">
+          <label for="address">Contract Address:</label>
+          <input type="text" id="address" placeholder="0x...">
+        </div>
+        
+        <div class="form-group">
+          <label for="type">Type:</label>
+          <input type="text" id="type" placeholder="e.g., book, collection">
+        </div>
+        
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <textarea id="description" rows="3" placeholder="Brief description"></textarea>
+        </div>
+        
+        <div class="form-group">
+          <label for="website">Website (optional):</label>
+          <input type="text" id="website" placeholder="https://...">
+        </div>
+        
+        <button id="submit-button">Add to Registry</button>
+        <div id="submit-message" class="message hidden"></div>
+      </div>
+    </div>
+  </div>
   
   <script>
-    // Fetch and display the registry data as an example
-    fetch('/.netlify/functions/registry')
-      .then(response => response.json())
-      .then(data => {
-        document.getElementById('example-response').textContent = JSON.stringify(data, null, 2);
-      })
-      .catch(error => {
-        document.getElementById('example-response').textContent = 'Error fetching registry data: ' + error.message;
+    // Tab functionality
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and content
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
       });
+    });
+    
+    // Fetch and display the registry data
+    let registryData = {};
+    
+    function fetchRegistry() {
+      fetch('/.netlify/functions/registry')
+        .then(response => response.json())
+        .then(data => {
+          registryData = data;
+          document.getElementById('example-response').textContent = JSON.stringify(data, null, 2);
+        })
+        .catch(error => {
+          document.getElementById('example-response').textContent = 'Error fetching registry data: ' + error.message;
+        });
+    }
+    
+    fetchRegistry();
+    
+    // Authentication handling
+    let apiToken = '';
+    
+    document.getElementById('auth-button').addEventListener('click', () => {
+      apiToken = document.getElementById('api-token').value.trim();
+      const authMessage = document.getElementById('auth-message');
+      
+      if (!apiToken) {
+        authMessage.textContent = 'Please enter an API token';
+        authMessage.classList.remove('hidden', 'success');
+        authMessage.classList.add('error');
+        return;
+      }
+      
+      // Simple validation - in a real app, you might want to verify the token with the server
+      authMessage.textContent = 'Authentication successful';
+      authMessage.classList.remove('hidden', 'error');
+      authMessage.classList.add('success');
+      
+      // Show the add item form
+      document.getElementById('add-item-form').classList.remove('hidden');
+    });
+    
+    // Form submission
+    document.getElementById('submit-button').addEventListener('click', async () => {
+      const submitMessage = document.getElementById('submit-message');
+      
+      // Get form values
+      const chain = document.getElementById('chain').value;
+      const name = document.getElementById('name').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const type = document.getElementById('type').value.trim();
+      const description = document.getElementById('description').value.trim();
+      const website = document.getElementById('website').value.trim();
+      
+      // Validate required fields
+      if (!name || !address) {
+        submitMessage.textContent = 'Name and address are required';
+        submitMessage.classList.remove('hidden', 'success');
+        submitMessage.classList.add('error');
+        return;
+      }
+      
+      // Create new item
+      const newItem = {
+        name,
+        address,
+        type,
+        description,
+        dateAdded: new Date().toISOString()
+      };
+      
+      if (website) {
+        newItem.website = website;
+      }
+      
+      try {
+        // Create updated registry data
+        const updatedRegistry = { ...registryData };
+        
+        // Ensure the chain array exists
+        if (!updatedRegistry[chain]) {
+          updatedRegistry[chain] = [];
+        }
+        
+        // Add the new item
+        updatedRegistry[chain].push(newItem);
+        
+        // Send the update to the server
+        const response = await fetch('/.netlify/functions/registry', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiToken}`
+          },
+          body: JSON.stringify(updatedRegistry)
+        });
+        
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to update registry');
+        }
+        
+        // Show success message
+        submitMessage.textContent = 'Item added successfully';
+        submitMessage.classList.remove('hidden', 'error');
+        submitMessage.classList.add('success');
+        
+        // Refresh the registry data
+        fetchRegistry();
+        
+        // Clear form fields
+        document.getElementById('name').value = '';
+        document.getElementById('address').value = '';
+        document.getElementById('type').value = '';
+        document.getElementById('description').value = '';
+        document.getElementById('website').value = '';
+        
+      } catch (error) {
+        submitMessage.textContent = `Error: ${error.message}`;
+        submitMessage.classList.remove('hidden', 'success');
+        submitMessage.classList.add('error');
+      }
+    });
   </script>
 </body>
 </html>
