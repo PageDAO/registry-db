@@ -17,7 +17,7 @@ async function getRegistry() {
       owner: REPO_OWNER,
       repo: REPO_NAME,
       path: FILE_PATH,
-      ref: 'main'
+      ref: 'master'
     });
     
     const content = Buffer.from(response.data.content, 'base64').toString();
@@ -43,7 +43,7 @@ async function updateRegistry(data) {
       owner: REPO_OWNER,
       repo: REPO_NAME,
       path: FILE_PATH,
-      ref: 'main'
+      ref: 'master'
     });
 
     // Update file in GitHub
@@ -54,7 +54,7 @@ async function updateRegistry(data) {
       message: 'Update registry via API',
       content: Buffer.from(JSON.stringify(data, null, 2)).toString('base64'),
       sha: currentFile.data.sha,
-      branch: 'main'
+      branch: 'master'
     });
     
     return { success: true, commit: response.data.commit };
