@@ -1,5 +1,5 @@
 {
-  "name": "pagedao-registry-service",
+  "name": "pagedao-registry-db",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {

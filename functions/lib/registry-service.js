@@ -6,7 +6,7 @@ const octokit = new Octokit({
 });
 
 const REPO_OWNER = 'PageDAO';
-const REPO_NAME = 'registry-service';
+const REPO_NAME = 'registry-db';
 const FILE_PATH = 'data/registry.json';
 
 // Get the current registry
