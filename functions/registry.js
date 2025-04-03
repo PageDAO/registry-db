@@ -1,6 +1,6 @@
-const { getRegistry, updateRegistry, authenticate } = require('./lib/registry-service');
+import { getRegistry, updateRegistry, authenticate } from './lib/registry-service.js';
 
-exports.handler = async (event, context) => {
+export const handler = async (event, context) => {
   // CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -58,7 +58,7 @@ exports.handler = async (event, context) => {
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ error: 'Internal server error', details: error.message })
     };
   }
 };
