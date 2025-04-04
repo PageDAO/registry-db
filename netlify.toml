@@ -5,7 +5,8 @@
   functions = "functions"
   publish = "public"
 
+# Redirect /api to the registry function
 [[redirects]]
-  from = "/"
+  from = "/api"
   to = "/.netlify/functions/registry"
   status = 200
