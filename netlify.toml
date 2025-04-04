@@ -5,20 +5,8 @@
   functions = "functions"
   publish = "public"
 
-# This redirect ensures that the root path serves index.html
+# Simple redirect to make sure index.html is served at the root
 [[redirects]]
   from = "/"
-  to = "/index.html"
-  status = 200
-
-# This redirect ensures that API requests go to the function
-[[redirects]]
-  from = "/api"
-  to = "/.netlify/functions/registry"
-  status = 200
-
-# This is a fallback for all other paths
-[[redirects]]
-  from = "/*"
   to = "/index.html"
   status = 200
