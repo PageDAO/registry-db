@@ -1,7 +1,14 @@
 {
-    "base": [],
-    "ethereum": [],
-    "polygon": [],
-    "zora": [],
-    "optimism": []
-  }
+  "base": [],
+  "ethereum": [],
+  "polygon": [
+    {
+      "name": "Readme Books by PageDAO",
+      "address": "0x931204Fb8CEA7F7068995dcE924F0d76d571DF99",
+      "type": "book",
+      "dateAdded": "2023-05-01T12:00:00Z"
+    }
+  ],
+  "zora": [],
+  "optimism": []
+}
