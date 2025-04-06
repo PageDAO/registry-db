@@ -3,10 +3,11 @@ import { getRegistry, updateRegistry, authenticate } from './lib/registry-servic
 export const handler = async (event, context) => {
   // CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Content-Type': 'application/json'
-  };
+  'Access-Control-Allow-Origin': '*',  // Allow requests from any origin
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
+  'Content-Type': 'application/json'
+};
 
   // Handle preflight requests
   if (event.httpMethod === 'OPTIONS') {
